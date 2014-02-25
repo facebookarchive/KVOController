@@ -6,7 +6,7 @@ Key-value observing is a particularly useful technique for communicating between
 - No exceptions on observer removal.
 - Implicit observer removal on controller dealloc.
 - Improved performance when using NSKeyValueObservingInitial.
-- Thread-safety with special guards against observer resurection – [rdar://15985376](http://openradar.appspot.com/radar?id=5305010728468480).
+- Thread-safety with special guards against observer resurrection – [rdar://15985376](http://openradar.appspot.com/radar?id=5305010728468480).
 
 For more information on KVO, see Apple's [Introduction to Key-Value Observing](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html).
 
