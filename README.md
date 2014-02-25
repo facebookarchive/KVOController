@@ -37,11 +37,11 @@ KVOController takes advantage of recent Objective-C runtime advances, including 
 
 ## Installation
 
-Drag and drop FBKVOController.h and FBKVOControler.m into your Xcode project, agreeing to copy files if needed. Alternatively, for iOS applications, you can choose to link against the static library target of the KVOController project.
+Drag and drop FBKVOController.h and FBKVOController.m into your Xcode project, agreeing to copy files if needed. Alternatively, for iOS applications, you can choose to link against the static library target of the KVOController project.
 
 ## Testing
 
-The unit tests included use CocoaPods for managing depenendecies. Install CocoaPods if you haven't already done so. Then, at the command line, navigate to the root KVOController directory and type:
+The unit tests included use CocoaPods for managing dependencies. Install CocoaPods if you haven't already done so. Then, at the command line, navigate to the root KVOController directory and type:
 
 ```sh
 pod install
