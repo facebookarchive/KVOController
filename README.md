@@ -1,6 +1,6 @@
 # [KVOController](https://github.com/facebook/KVOController)
 
-Key-value observing is a particularly useful technique for communicating between layers in a Model-View-Controller application. KVOController builds on the time-tested Cocoa key-value observing implementation. It offers a simple, convenient API, that is also truly thread safe. Benefits include:
+Key-value observing is a particularly useful technique for communicating between layers in a Model-View-Controller application. KVOController builds on Cocoa's time-tested key-value observing implementation. It offers a simple, modern API, that is also thread safe. Benefits include:
 
 - Notification using blocks, custom actions, or NSKeyValueObserving callback.
 - No exceptions on observer removal.
