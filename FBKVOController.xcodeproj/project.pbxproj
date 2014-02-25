@@ -74,6 +74,7 @@
 		EC8BB5B418A5A1F500EB2793 /* PATENTS */ = {isa = PBXFileReference; lastKnownFileType = text; path = PATENTS; sourceTree = "<group>"; };
 		EC8BB5B518A5A30700EB2793 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		EC8BB5B618A5A30F00EB2793 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		ECAFBD5E18BD47BE009B4EC6 /* KVOController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = KVOController.podspec; sourceTree = "<group>"; };
 		ECEA60FE18A49C620064AFF4 /* libFBKVOController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFBKVOController.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECEA610118A49C620064AFF4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ECEA610518A49C620064AFF4 /* FBKVOController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FBKVOController-Prefix.pch"; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 				EC8BB5B518A5A30700EB2793 /* CONTRIBUTING.md */,
 				EC8BB5B318A5A1EE00EB2793 /* LICENSE */,
 				EC8BB5B418A5A1F500EB2793 /* PATENTS */,
+				ECAFBD5E18BD47BE009B4EC6 /* KVOController.podspec */,
 				ECEA610318A49C620064AFF4 /* FBKVOController */,
 				ECEA611718A49C620064AFF4 /* FBKVOControllerTests */,
 				ECEA610018A49C620064AFF4 /* Frameworks */,
