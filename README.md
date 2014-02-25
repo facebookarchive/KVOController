@@ -26,7 +26,7 @@ FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
 }];
 ```
 
-While simple, the above example is complete. A clock view creates a KVO controller to observe the clock date property. A block callback is used to handle initial and change notification. Unobservation happens implicitely on controller deallocation.
+While simple, the above example is complete. A clock view creates a KVO controller to observe the clock date property. A block callback is used to handle initial and change notification. Unobservation happens implicitly on controller deallocation.
 
 ## Prerequisites
 
