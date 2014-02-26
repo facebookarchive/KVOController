@@ -66,6 +66,10 @@ pod 'KVOController'
 
 Alternatively, drag and drop FBKVOController.h and FBKVOController.m into your Xcode project, agreeing to copy files if needed. For iOS applications, you can choose to link against the static library target of the KVOController project.
 
+Having installed using CocoaPods, add the following to import in Objective-C:
+```objective-c
+#import <KVOController/FBKVOController.h>
+```
 
 ## Testing
 
