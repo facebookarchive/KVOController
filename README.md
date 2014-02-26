@@ -28,6 +28,27 @@ FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
 
 While simple, the above example is complete. A clock view creates a KVO controller to observe the clock date property. A block callback is used to handle initial and change notification. Unobservation happens implicitly on controller deallocation.
 
+To automatically remove observers on observer dealloc, add a strong reference between observer and KVO controller.
+
+```objective-c
+// Observer with KVO controller instance variable
+@implementation ClockView
+{
+  FBKVOController *_KVOController;
+}
+
+- (id)init
+{
+  ...
+  // create KVO controller with observer
+  FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
+
+  // add strong reference from observer to KVO controller
+  _KVOController = [FBKVOController controllerWithObserver:self];
+
+```
+A zeroing weak reference from KVO controller to observer guards against notification of a deallocated observer instance.
+
 ## Prerequisites
 
 KVOController takes advantage of recent Objective-C runtime advances, including ARC and weak collections. It requires:
@@ -51,4 +72,4 @@ This will install and add test dependencies on OCHamcrest and OCMockito. Re-open
 
 ## Licence
 
-KVOController is released under the BSD License.
+KVOController is released under a BSD License. See LICENSE file for details.
