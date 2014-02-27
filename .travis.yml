@@ -1,0 +1,6 @@
+language: objective-c
+before_install:
+  - gem install xcpretty
+  - gem install cocoapods
+  - pod install
+script:  xcodebuild -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator7.0 test | xcpretty -c
