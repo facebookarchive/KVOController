@@ -47,7 +47,7 @@ To automatically remove observers on observer dealloc, add a strong reference be
   FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
 
   // add strong reference from observer to KVO controller
-  _KVOController = [FBKVOController controllerWithObserver:self];
+  _KVOController = KVOController;
 
 ```
 A zeroing weak reference from KVO controller to observer guards against notification of a deallocated observer instance.
