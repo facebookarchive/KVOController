@@ -226,14 +226,20 @@ static NSDictionary *change_dictionary_init(id object, NSUInteger options, NSStr
 {
   self = [super init];
   if (nil != self) {
-    _infos = [NSHashTable alloc];
+    NSHashTable *infos = [NSHashTable alloc];
 #ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
-    _infos = [_infos initWithOptions:NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
+    _infos = [infos initWithOptions:NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
-    if ([NSHashTable resolveClassMethod:@selector(weakObjectsHashTable)])
-      _infos = [_infos initWithOptions:NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
-    else
-      _infos = [_infos initWithOptions:NSPointerFunctionsZeroingWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
+    if ([NSHashTable respondsToSelector:@selector(weakObjectsHashTable)]) {
+      _infos = [infos initWithOptions:NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
+    } else {
+      // silence deprecated warnings
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+      _infos = [infos initWithOptions:NSPointerFunctionsZeroingWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
+#pragma clang diagnostic pop
+    }
+
 #endif
     _lock = OS_SPINLOCK_INIT;
   }
