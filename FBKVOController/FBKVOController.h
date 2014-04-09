@@ -33,7 +33,7 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
 
 /**
  @abstract The designated initializer.
- @param observer The object notified on key-value change.
+ @param observer The object notified on key-value change. The specified observer must support weak references.
  @return The initialized KVO controller instance.
  */
 - (instancetype)initWithObserver:(id)observer;

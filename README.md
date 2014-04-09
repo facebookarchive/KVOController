@@ -21,7 +21,7 @@ Example apps for iOS and OS X are included with the project. Here is one simple 
 // create KVO controller with observer
 FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
 
-// observe clock date property 
+// observe clock date property
 [KVOController observe:clock keyPath:@"date" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(ClockView *clockView, Clock *clock, NSDictionary *change) {
 
   // update clock view with new value
@@ -50,7 +50,7 @@ To automatically remove observers on observer dealloc, add a strong reference be
   _KVOController = KVOController;
 
 ```
-A zeroing weak reference from KVO controller to observer guards against notification of a deallocated observer instance.
+Note: the observer specified must support weak references. The zeroing weak reference guards against notification of a deallocated observer instance.
 
 ## Prerequisites
 
