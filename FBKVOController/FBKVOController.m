@@ -351,7 +351,10 @@ static NSDictionary *change_dictionary_init(id object, NSUInteger options, NSStr
         if (info->_block) {
           info->_block(observer, object, change);
         } else if (info->_action) {
-          objc_msgSend(observer, info->_action, change, object);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+          [observer performSelector:info->_action withObject:change withObject:object];
+#pragma clang diagnostic pop
         } else {
           [observer observeValueForKeyPath:keyPath ofObject:object change:change context:info->_context];
         }
