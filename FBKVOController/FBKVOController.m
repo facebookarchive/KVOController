@@ -78,18 +78,6 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return s;
 }
 
-static NSDictionary *change_dictionary_init(id object, NSUInteger options, NSString *keyPath)
-{
-  NSDictionary *dict;
-  if (0 == (NSKeyValueObservingOptionNew & options)) {
-    dict = @{NSKeyValueChangeKindKey : @(NSKeyValueChangeSetting)};
-  } else {
-    id value = [object valueForKeyPath:keyPath];
-    dict = @{NSKeyValueChangeKindKey : @(NSKeyValueChangeSetting), NSKeyValueChangeNewKey : value ?: [NSNull null]};
-  }
-  return dict;
-}
-
 #pragma mark _FBKVOInfo -
 
 /**
@@ -278,16 +266,8 @@ static NSDictionary *change_dictionary_init(id object, NSUInteger options, NSStr
   [_infos addObject:info];
   OSSpinLockUnlock(&_lock);
   
-  // remove costly initial
-  NSUInteger options = info->_options & ~NSKeyValueObservingOptionInitial;
-  
   // add observer
-  [object addObserver:self forKeyPath:info->_keyPath options:options context:(void *)info];
-  
-  // manually perform initial callback if necessary
-  if (0 != (NSKeyValueObservingOptionInitial & info->_options)) {
-    [self observeValueForKeyPath:info->_keyPath ofObject:object change:change_dictionary_init(object, info->_options, info->_keyPath) context:(void *)info];
-  }
+  [object addObserver:self forKeyPath:info->_keyPath options:info->_options context:(void *)info];
 }
 
 - (void)unobserve:(id)object info:(_FBKVOInfo *)info
