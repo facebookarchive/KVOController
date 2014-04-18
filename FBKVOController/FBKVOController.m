@@ -360,15 +360,21 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return [[self alloc] initWithObserver:observer];
 }
 
-- (instancetype)initWithObserver:(id)observer
+- (instancetype)initWithObserver:(id)observer retainObserved:(BOOL)retainObserved
 {
   self = [super init];
   if (nil != self) {
     _observer = observer;
-    _objectInfosMap = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPointerPersonality valueOptions:NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPersonality capacity:0];
+    NSPointerFunctionsOptions keyOptions = retainObserved ? NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPointerPersonality : NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality;
+    _objectInfosMap = [[NSMapTable alloc] initWithKeyOptions:keyOptions valueOptions:NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPersonality capacity:0];
     _lock = OS_SPINLOCK_INIT;
   }
   return self;
+}
+
+- (instancetype)initWithObserver:(id)observer
+{
+  return [self initWithObserver:observer retainObserved:YES];
 }
 
 - (void)dealloc

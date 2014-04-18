@@ -20,7 +20,7 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
 
 /**
  @abstract FBKVOController makes Key-Value Observing simpler and safer.
- @discussion FBKVOController adds support for handling key-value changes with blocks and custom actions, as well as the NSKeyValueObserving callback. Notification will never message a deallocated observer. Observer removal never throws exceptions, and observers are removed implicitely on controller deallocation. FBKVOController is also thread safe. When used in a concurrent environment, it protects observers from possible ressurection and avoids ensuing crash. The controller maintains a strong reference to objects observed.
+ @discussion FBKVOController adds support for handling key-value changes with blocks and custom actions, as well as the NSKeyValueObserving callback. Notification will never message a deallocated observer. Observer removal never throws exceptions, and observers are removed implicitely on controller deallocation. FBKVOController is also thread safe. When used in a concurrent environment, it protects observers from possible ressurection and avoids ensuing crash. By default, the controller maintains a strong reference to objects observed.
  */
 @interface FBKVOController : NSObject
 
@@ -34,7 +34,17 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
 /**
  @abstract The designated initializer.
  @param observer The object notified on key-value change. The specified observer must support weak references.
+ @param retainObserved Flag indicating whether observed objects should be retained.
  @return The initialized KVO controller instance.
+ @discussion Use retainObserved = NO when a strong reference between controller and observee would create a retain loop. When not retaining observees, special care must be taken to remove observation info prior to observee dealloc.
+ */
+- (instancetype)initWithObserver:(id)observer retainObserved:(BOOL)retainObserved;
+
+/**
+ @abstract Convenience initializer.
+ @param observer The object notified on key-value change. The specified observer must support weak references.
+ @return The initialized KVO controller instance.
+ @discussion By default, KVO controller retains objects observed.
  */
 - (instancetype)initWithObserver:(id)observer;
 
