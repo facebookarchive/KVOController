@@ -34,7 +34,7 @@ static NSString *describe_option(NSKeyValueObservingOptions option)
       return @"NSKeyValueObservingOptionPrior";
       break;
     default:
-      NSCAssert(NO, @"unexpected option %lu", (unsigned long)option);
+      NSCAssert(NO, @"unexpected option %tu", option);
       break;
   }
   return nil;
