@@ -14,7 +14,7 @@
 /// The shared clock instance.
 + (instancetype)clock;
 
-/// The curent date and time. Obsevable.
+/// The curent date and time. Observable.
 @property (strong, readonly, nonatomic) NSDate *date;
 
 @end
