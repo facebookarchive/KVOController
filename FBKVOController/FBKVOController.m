@@ -622,3 +622,30 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 }
 
 @end
+
+#pragma mark NSObject Category -
+
+static void *NSObjectKVOControllerKey = &NSObjectKVOControllerKey;
+
+@implementation NSObject (FBKVOController)
+
+- (FBKVOController *)KVOController
+{
+  id controller = objc_getAssociatedObject(self, NSObjectKVOControllerKey);
+  
+  // lazily create the KVOController
+  if (nil == controller) {
+    controller = [FBKVOController controllerWithObserver:self];
+    self.KVOController = controller;
+  }
+  
+  return controller;
+}
+
+- (void)setKVOController:(FBKVOController *)KVOController
+{
+  objc_setAssociatedObject(self, NSObjectKVOControllerKey, KVOController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+
