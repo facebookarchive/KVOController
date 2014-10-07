@@ -626,6 +626,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 #pragma mark NSObject Category -
 
 static void *NSObjectKVOControllerKey = &NSObjectKVOControllerKey;
+static void *NSObjectKVOControllerNonRetainingKey = &NSObjectKVOControllerNonRetainingKey;
 
 @implementation NSObject (FBKVOController)
 
@@ -645,6 +646,23 @@ static void *NSObjectKVOControllerKey = &NSObjectKVOControllerKey;
 - (void)setKVOController:(FBKVOController *)KVOController
 {
   objc_setAssociatedObject(self, NSObjectKVOControllerKey, KVOController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (FBKVOController *)KVOControllerNonRetaining
+{
+  id controller = objc_getAssociatedObject(self, NSObjectKVOControllerNonRetainingKey);
+  
+  if (nil == controller) {
+    controller = [[FBKVOController alloc] initWithObserver:self retainObserved:NO];
+    self.KVOControllerNonRetaining = controller;
+  }
+  
+  return controller;
+}
+
+- (void)setKVOControllerNonRetaining:(FBKVOController *)KVOControllerNonRetaining
+{
+  objc_setAssociatedObject(self, NSObjectKVOControllerNonRetainingKey, KVOControllerNonRetaining, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

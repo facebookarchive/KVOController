@@ -144,5 +144,6 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
  @discussion This makes it convenient to simply create and forget a FBKVOController, and when this object gets dealloc'd, so will the associated controller and the observation info.
  */
 @property (nonatomic, strong) FBKVOController *KVOController;
+@property (nonatomic, strong) FBKVOController *KVOControllerNonRetaining;
 
 @end
