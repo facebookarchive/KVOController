@@ -19,36 +19,18 @@ Example apps for iOS and OS X are included with the project. Here is one simple 
 ```objective-c
 // create KVO controller with observer
 FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
+self.KVOController = KVOController;
 
 // observe clock date property
-[KVOController observe:clock keyPath:@"date" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(ClockView *clockView, Clock *clock, NSDictionary *change) {
+[self.KVOController observe:clock keyPath:@"date" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(ClockView *clockView, Clock *clock, NSDictionary *change) {
 
   // update clock view with new value
   clockView.date = change[NSKeyValueChangeNewKey];
 }];
 ```
 
-While simple, the above example is complete. A clock view creates a KVO controller to observe the clock date property. A block callback is used to handle initial and change notification. Unobservation happens implicitly on controller deallocation.
+While simple, the above example is complete. A clock view creates a KVO controller to observe the clock date property. A block callback is used to handle initial and change notification. Unobservation happens implicitly on controller deallocation, since a strong reference to the `KVOController` is kept. 
 
-To automatically remove observers on observer dealloc, add a strong reference between observer and KVO controller.
-
-```objective-c
-// Observer with KVO controller instance variable
-@implementation ClockView
-{
-  FBKVOController *_KVOController;
-}
-
-- (id)init
-{
-  ...
-  // create KVO controller with observer
-  FBKVOController *KVOController = [FBKVOController controllerWithObserver:self];
-
-  // add strong reference from observer to KVO controller
-  _KVOController = KVOController;
-
-```
 Note: the observer specified must support weak references. The zeroing weak reference guards against notification of a deallocated observer instance.
 
 ## Prerequisites
