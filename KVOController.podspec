@@ -5,8 +5,8 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/facebook/KVOController'
   spec.authors      = { 'Kimon Tsinteris' => 'kimon@mac.com' }
   spec.summary      = 'Simple, modern, thread-safe key-value observing.'
-  spec.source       = { :git => 'https://github.com/facebook/KVOController.git', :tag => 'v1.0.3' }
-  spec.source_files = 'FBKVOController/FBKVOController.{h,m}'
+  spec.source       = { :git => 'https://github.com/facebook/KVOController.git', :tag => spec.version.to_s }
+  spec.source_files = 'FBKVOController/*.{h,m}'
   spec.requires_arc = true
 
   spec.ios.deployment_target = '6.0'
