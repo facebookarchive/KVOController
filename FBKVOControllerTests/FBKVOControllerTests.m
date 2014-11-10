@@ -16,6 +16,7 @@
 #import <OCMockito/OCMockito.h>
 
 #import <FBKVOController/FBKVOController.h>
+#import <FBKVOController/NSObject+FBKVOController.h>
 
 #import "FBKVOTesting.h"
 
