@@ -20,7 +20,7 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
 
 /**
  @abstract FBKVOController makes Key-Value Observing simpler and safer.
- @discussion FBKVOController adds support for handling key-value changes with blocks and custom actions, as well as the NSKeyValueObserving callback. Notification will never message a deallocated observer. Observer removal never throws exceptions, and observers are removed implicitely on controller deallocation. FBKVOController is also thread safe. When used in a concurrent environment, it protects observers from possible ressurection and avoids ensuing crash. By default, the controller maintains a strong reference to objects observed.
+ @discussion FBKVOController adds support for handling key-value changes with blocks and custom actions, as well as the NSKeyValueObserving callback. Notification will never message a deallocated observer. Observer removal never throws exceptions, and observers are removed implicitly on controller deallocation. FBKVOController is also thread safe. When used in a concurrent environment, it protects observers from possible resurrection and avoids ensuing crash. By default, the controller maintains a strong reference to objects observed.
  */
 @interface FBKVOController : NSObject
 
