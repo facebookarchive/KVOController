@@ -1,7 +1,7 @@
 language: objective-c
 before_install:
   - brew update
-  - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+  - brew reinstall xctool
   - gem update cocoapods
 xcode_workspace: FBKVOController.xcworkspace
 xcode_scheme: FBKVOController
