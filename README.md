@@ -72,6 +72,6 @@ pod install
 
 This will install and add test dependencies on OCHamcrest and OCMockito. Re-open the Xcode KVOController workspace and Test, ⌘U.
 
-## Licence
+## License
 
 KVOController is released under a BSD License. See LICENSE file for details.
