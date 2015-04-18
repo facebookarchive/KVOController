@@ -7,7 +7,7 @@ DEPENDENCIES:
   - OCMockito (~> 1.0)
 
 SPEC CHECKSUMS:
-  OCHamcrest: b464725bbb48d0f1cd9c6f4ec3cb35fe0c4f2b94
-  OCMockito: 57b8c4bb54ff3a4a14eb2174f9e57faf9f56efb6
+  OCHamcrest: a62dbcf4dec9cbf091263d936e0de8dec02baac0
+  OCMockito: 958f33ee8ad03eeb62e1397ef6b60f5121214ca4
 
-COCOAPODS: 0.34.4
+COCOAPODS: 0.36.0
