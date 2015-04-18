@@ -142,6 +142,163 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
   [circle removeObserver:referenceObserver forKeyPath:radius];
 }
 
+- (void)testObserveKeyPathsOptionsBlockWhenKeyPathsIsNilRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  FBKVONotificationBlock arbitraryBlock = ^(id observer, id object, NSDictionary *change) { /* noop */ };
+  XCTAssertThrows([controller observe:nil keyPaths:nil options:0 block:arbitraryBlock]);
+}
+
+- (void)testObserveKeyPathsOptionsBlockWhenKeyPathsIsEmptyRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *emptyKeyPaths = @[];
+  FBKVONotificationBlock arbitraryBlock = ^(id observer, id object, NSDictionary *change) { /* noop */ };
+  XCTAssertThrows([controller observe:nil keyPaths:emptyKeyPaths options:0 block:arbitraryBlock]);
+}
+
+- (void)testObserveKeyPathsOptionsBlockWhenBlockIsNilRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *arbitraryKeyPaths = @[@"ante", @"bellum"];
+  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 block:nil]);
+}
+
+- (void)testObserveKeyPathsOptionsBlockWhenObjectIsNilDoesNothing
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *arbitraryKeyPaths = @[@"ante", @"bellum"];
+  FBKVONotificationBlock arbitraryBlock = ^(id observer, id object, NSDictionary *change) { /* noop */ };
+  XCTAssertNoThrow([controller observe:nil keyPaths:arbitraryKeyPaths options:0 block:arbitraryBlock]);
+}
+
+- (void)testObserveKeyPathsOptionsBlockObservesEachOfTheKeyPaths
+{
+  // Arrange 1: Create a controller to observe changes to a circle.
+  id<FBKVOTestObserving> observer = mockProtocol(@protocol(FBKVOTestObserving));
+  FBKVOController *controller = [FBKVOController controllerWithObserver:observer];
+
+  // Arrange 2: Observe the key paths "radius" and "borderWidth" on the circle.
+  //            Aggregate the new values in an array.
+  NSMutableArray *newValues = [NSMutableArray array];
+  FBKVOTestCircle *circle = [FBKVOTestCircle circle];
+  [controller observe:circle keyPaths:@[radius, borderWidth] options:NSKeyValueObservingOptionNew block:^(id observer, FBKVOTestCircle *circle, NSDictionary *change) {
+    [newValues addObject:change[NSKeyValueChangeNewKey]];
+  }];
+
+  // Act: Change the values to trigger the KVO notification block.
+  circle.radius = 1.f;
+  circle.borderWidth = 10.f;
+
+  // Assert: Changes to the radius and borderWidth should have been observed.
+  assertThat(newValues, equalTo(@[@1, @10]));
+}
+
+- (void)testObserveKeyPathsOptionsActionWhenKeyPathsIsNilRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  SEL arbitrarySelector = @selector(cookies);
+  XCTAssertThrows([controller observe:nil keyPaths:nil options:0 action:arbitrarySelector]);
+}
+
+- (void)testObserveKeyPathsOptionsActionWhenKeyPathsIsEmptyRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *emptyKeyPaths = @[];
+  SEL arbitrarySelector = @selector(cookies);
+  XCTAssertThrows([controller observe:nil keyPaths:emptyKeyPaths options:0 action:arbitrarySelector]);
+}
+
+- (void)testObserveKeyPathsOptionsActionWhenActionIsNullRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *arbitraryKeyPaths = @[@"carpe", @"diem"];
+  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 action:NULL]);
+}
+
+- (void)testObserveKeyPathsOptionsActionWhenObjectIsNilRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *arbitraryKeyPaths = @[@"ante", @"bellum"];
+  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 action:@selector(debugDescription)]);
+}
+
+- (void)testObserveKeyPathsOptionsActionWhenObjectDoesNotRespondToSelectorRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *arbitraryKeyPaths = @[@"caveat", @"emptor"];
+  XCTAssertThrows([controller observe:[NSObject new] keyPaths:arbitraryKeyPaths options:0 action:@selector(cookies)]);
+}
+
+- (void)testObserveKeyPathsOptionsActionObservesEachOfTheKeyPaths
+{
+  // Arrange 1: Create a controller to observe changes to a circle.
+  id<FBKVOTestObserving> observer = mockProtocol(@protocol(FBKVOTestObserving));
+  FBKVOController *controller = [FBKVOController controllerWithObserver:observer];
+
+  // Arrange 2: Observe the key paths "radius" and "borderWidth" on the circle.
+  FBKVOTestCircle *circle = [FBKVOTestCircle circle];
+  [controller observe:circle
+             keyPaths:@[radius, borderWidth]
+              options:NSKeyValueObservingOptionNew
+               action:@selector(propertyDidChange)];
+
+  // Act: Change the values to trigger the KVO action selector.
+  circle.radius = 1.f;
+  circle.borderWidth = 10.f;
+
+  // Assert: Changes to the radius and borderWidth should have been observed.
+  [verifyCount(observer, times(2)) propertyDidChange];
+}
+
+- (void)testObserveKeyPathsOptionsContextWhenKeyPathsIsNilRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  XCTAssertThrows([controller observe:nil keyPaths:nil options:0 context:NULL]);
+}
+
+- (void)testObserveKeyPathsOptionsContextWhenKeyPathsIsEmptyRaises
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *emptyKeyPaths = @[];
+  XCTAssertThrows([controller observe:nil keyPaths:emptyKeyPaths options:0 context:NULL]);
+}
+
+- (void)testObserveKeyPathsOptionsContextWhenObjectIsNilDoesNothing
+{
+  FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
+  NSArray *arbitraryKeyPaths = @[@"terra", @"firma"];
+  XCTAssertNoThrow([controller observe:nil keyPaths:arbitraryKeyPaths options:0 context:NULL]);
+}
+
+- (void)testObserveKeyPathsOptionsContextObservesEachOfTheKeyPaths
+{
+  // Arrange 1: Create a controller to observe changes to a circle.
+  id<FBKVOTestObserving> observer = mockProtocol(@protocol(FBKVOTestObserving));
+  FBKVOController *controller = [FBKVOController controllerWithObserver:observer];
+
+  // Arrange 2: Observe the key paths "radius" and "borderWidth" on the circle.
+  FBKVOTestCircle *circle = [FBKVOTestCircle circle];
+  [controller observe:circle
+             keyPaths:@[radius, borderWidth]
+              options:NSKeyValueObservingOptionNew
+              context:NULL];
+
+  // Act: Change the values to trigger the KVO action selector.
+  circle.radius = 1.f;
+  circle.borderWidth = 10.f;
+
+  // Assert: Changes to the radius and borderWidth should have been observed.
+  [verifyCount(observer, times(1)) observeValueForKeyPath:radius
+                                                 ofObject:circle
+                                                   change:anything()
+                                                  context:NULL];
+  [verifyCount(observer, times(1)) observeValueForKeyPath:borderWidth
+                                                 ofObject:circle
+                                                   change:anything()
+                                                  context:NULL];
+}
+
 - (void)testCustomActionOptionsBasic
 {
   FBKVOTestCircle *circle = [FBKVOTestCircle circle];
