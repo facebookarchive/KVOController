@@ -32,6 +32,15 @@ static NSKeyValueObservingOptions const optionsNone = 0;
 static NSKeyValueObservingOptions const optionsBasic = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial;
 static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueObservingOptionPrior;
 
+- (void)testDebugDescriptionContainsClassName
+{
+  id<FBKVOTestObserving> observer = mockProtocol(@protocol(FBKVOTestObserving));
+  FBKVOController *controller = [FBKVOController controllerWithObserver:observer];
+  FBKVOTestCircle *circle = [FBKVOTestCircle circle];
+  [controller observe:circle keyPaths:@[radius, borderWidth] options:optionsAll context:context];
+  assertThat([controller debugDescription], containsString(@"FBKVOController"));
+}
+
 - (void)testBlockOptionsBasic
 {
   FBKVOTestCircle *circle = [FBKVOTestCircle circle];
