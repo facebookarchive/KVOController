@@ -1,0 +1,5 @@
+ci_service: travis_ci
+coverage_service: coveralls
+xcodeproj: FBKVOController.xcodeproj
+source_directory: FBKVOController
+
