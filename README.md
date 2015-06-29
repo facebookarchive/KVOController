@@ -1,5 +1,6 @@
 # [KVOController](https://github.com/facebook/KVOController)
 [![Build Status](https://travis-ci.org/facebook/KVOController.png?branch=master)](https://travis-ci.org/facebook/KVOController)
+[![Coverage Status](https://coveralls.io/repos/facebook/KVOController/badge.svg?branch=master)](https://coveralls.io/r/facebook/KVOController?branch=master)
 [![Version](https://cocoapod-badges.herokuapp.com/v/KVOController/badge.png)](http://cocoadocs.org/docsets/KVOController)
 [![Platform](https://cocoapod-badges.herokuapp.com/p/KVOController/badge.png)](http://cocoadocs.org/docsets/KVOController)
 
