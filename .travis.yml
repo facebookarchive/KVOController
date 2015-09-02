@@ -4,10 +4,9 @@ before_install:
   - brew reinstall xctool
   - gem update cocoapods
   - gem install slather
-xcode_workspace: FBKVOController.xcworkspace
-xcode_scheme: FBKVOController
-xcode_sdk:
-  - iphonesimulator7.0
-  - iphonesimulator7.1
+script:
+  - xctool -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator7.0 build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  - xctool -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator7.1 build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 after_success:
   - slather
+
