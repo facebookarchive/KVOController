@@ -21,4 +21,5 @@ Pod::Spec.new do |spec|
 
   spec.ios.deployment_target = '6.0'
   spec.osx.deployment_target = '10.7'
+  spec.watchos.deployment_target = "2.0"
 end
