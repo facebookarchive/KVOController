@@ -80,6 +80,17 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 #pragma mark _FBKVOInfo -
 
+typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
+  _FBKVOInfoStateInitial = 0,
+
+  // whether the observer registration in Foundation has completed
+  _FBKVOInfoStateObserving,
+
+  // whether `unobserve` was called before observer registration in Foundation has completed
+  // this could happen when `NSKeyValueObservingOptionInitial` is one of the NSKeyValueObservingOptions
+  _FBKVOInfoStateNotObserving,
+};
+
 /**
  @abstract The key-value observation info.
  @discussion Object equality is only used within the scope of a controller instance. Safely omit controller from equality definition.
@@ -96,6 +107,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   SEL _action;
   void *_context;
   FBKVONotificationBlock _block;
+  _FBKVOInfoState _state;
 }
 
 - (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block action:(SEL)action context:(void *)context
@@ -268,6 +280,16 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   
   // add observer
   [object addObserver:self forKeyPath:info->_keyPath options:info->_options context:(void *)info];
+
+  if (info->_state == _FBKVOInfoStateInitial) {
+    info->_state = _FBKVOInfoStateObserving;
+  } else if (info->_state == _FBKVOInfoStateNotObserving) {
+    // this could happen when `NSKeyValueObservingOptionInitial` is one of the NSKeyValueObservingOptions,
+    // and the observer is unregistered within the callback block.
+    // at this time the object has been registered as an observer (in Foundation KVO),
+    // so we can safely unobserve it.
+    [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
+  }
 }
 
 - (void)unobserve:(id)object info:(_FBKVOInfo *)info
@@ -282,7 +304,10 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   OSSpinLockUnlock(&_lock);
   
   // remove observer
-  [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
+  if (info->_state == _FBKVOInfoStateObserving) {
+    [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
+  }
+  info->_state = _FBKVOInfoStateNotObserving;
 }
 
 - (void)unobserve:(id)object infos:(NSSet *)infos
@@ -300,7 +325,10 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   
   // remove observer
   for (_FBKVOInfo *info in infos) {
-    [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
+    if (info->_state == _FBKVOInfoStateObserving) {
+      [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
+    }
+    info->_state = _FBKVOInfoStateNotObserving;
   }
 }
 
