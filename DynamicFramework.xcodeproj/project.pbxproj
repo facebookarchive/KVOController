@@ -54,7 +54,9 @@
 				D719F29A1B73962E0090C2FB /* KVOController */,
 				D719F2991B73962E0090C2FB /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		D719F2991B73962E0090C2FB /* Products */ = {
 			isa = PBXGroup;

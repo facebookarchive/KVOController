@@ -141,7 +141,9 @@
 				ECEA60FF18A49C620064AFF4 /* Products */,
 				29FD7E1F86281B4E7BCFC05F /* Pods */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		ECEA60FF18A49C620064AFF4 /* Products */ = {
 			isa = PBXGroup;
