@@ -1,12 +1,30 @@
+branches:
+  only:
+    - master
 language: objective-c
-before_install:
-  - brew update
-  - brew reinstall xctool
-  - gem update cocoapods
-  - gem install slather
+os: osx
+osx_image: xcode7.2
+env:
+  matrix:
+    - TEST_TYPE=iOS
+    - TEST_TYPE=CocoaPods
+install:
+- |
+  gem update cocoapods
+  gem install slather
+  brew update
+  brew reinstall xctool
+  pod install
 script:
-  - xctool -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator7.0 build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
-  - xctool -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator7.1 build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+- |
+  if [ "$TEST_TYPE" = "iOS" ]; then
+    xctool -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  elif [ "$TEST_TYPE" = CocoaPods ]; then
+    pod lib lint KVOController.podspec
+    pod lib lint --use-libraries KVOController.podspec
+  fi
 after_success:
-  - slather
-
+- |
+  if [ "$TEST_TYPE" = "iOS" ]; then
+    slather
+  fi
