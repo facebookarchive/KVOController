@@ -18,6 +18,8 @@
 
 #pragma mark NSObject Category -
 
+NS_ASSUME_NONNULL_BEGIN
+
 static void *NSObjectKVOControllerKey = &NSObjectKVOControllerKey;
 static void *NSObjectKVOControllerNonRetainingKey = &NSObjectKVOControllerNonRetainingKey;
 
@@ -60,3 +62,5 @@ static void *NSObjectKVOControllerNonRetainingKey = &NSObjectKVOControllerNonRet
 
 @end
 
+
+NS_ASSUME_NONNULL_END
