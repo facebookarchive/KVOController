@@ -155,7 +155,7 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
 {
   FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
   FBKVONotificationBlock arbitraryBlock = ^(id observer, id object, NSDictionary *change) { /* noop */ };
-  XCTAssertThrows([controller observe:nil keyPaths:nil options:0 block:arbitraryBlock]);
+  XCTAssertThrows([controller observe:nil keyPaths:(id _Nonnull)nil options:0 block:arbitraryBlock]);
 }
 
 - (void)testObserveKeyPathsOptionsBlockWhenKeyPathsIsEmptyRaises
@@ -170,7 +170,7 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
 {
   FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
   NSArray *arbitraryKeyPaths = @[@"ante", @"bellum"];
-  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 block:nil]);
+  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 block:(id _Nonnull)nil]);
 }
 
 - (void)testObserveKeyPathsOptionsBlockWhenObjectIsNilDoesNothing
@@ -207,7 +207,7 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
 {
   FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
   SEL arbitrarySelector = @selector(cookies);
-  XCTAssertThrows([controller observe:nil keyPaths:nil options:0 action:arbitrarySelector]);
+  XCTAssertThrows([controller observe:nil keyPaths:(id _Nonnull)nil options:0 action:arbitrarySelector]);
 }
 
 - (void)testObserveKeyPathsOptionsActionWhenKeyPathsIsEmptyRaises
@@ -222,7 +222,7 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
 {
   FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
   NSArray *arbitraryKeyPaths = @[@"carpe", @"diem"];
-  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 action:NULL]);
+  XCTAssertThrows([controller observe:nil keyPaths:arbitraryKeyPaths options:0 action:(SEL _Nonnull)NULL]);
 }
 
 - (void)testObserveKeyPathsOptionsActionWhenObjectIsNilRaises
@@ -263,7 +263,7 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
 - (void)testObserveKeyPathsOptionsContextWhenKeyPathsIsNilRaises
 {
   FBKVOController *controller = [FBKVOController controllerWithObserver:nil];
-  XCTAssertThrows([controller observe:nil keyPaths:nil options:0 context:NULL]);
+  XCTAssertThrows([controller observe:nil keyPaths:(id _Nonnull)nil options:0 context:NULL]);
 }
 
 - (void)testObserveKeyPathsOptionsContextWhenKeyPathsIsEmptyRaises
