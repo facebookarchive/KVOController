@@ -38,7 +38,7 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
   FBKVOController *controller = [FBKVOController controllerWithObserver:observer];
   FBKVOTestCircle *circle = [FBKVOTestCircle circle];
   [controller observe:circle keyPaths:@[radius, borderWidth] options:optionsAll context:context];
-  assertThat([controller debugDescription], containsString(@"FBKVOController"));
+  assertThat([controller debugDescription], containsSubstring(@"FBKVOController"));
 }
 
 - (void)testBlockOptionsBasic
