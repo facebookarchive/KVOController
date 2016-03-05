@@ -203,7 +203,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 @implementation _FBKVOSharedController
 {
-  NSHashTable *_infos;
+  NSHashTable<_FBKVOInfo *> *_infos;
   OSSpinLock _lock;
 }
 
@@ -292,7 +292,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
 }
 
-- (void)unobserve:(id)object infos:(nullable NSSet *)infos
+- (void)unobserve:(id)object infos:(nullable NSSet<_FBKVOInfo *> *)infos
 {
   if (0 == infos.count) {
     return;
@@ -313,7 +313,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath
                       ofObject:(nullable id)object
-                        change:(nullable NSDictionary *)change
+                        change:(nullable NSDictionary<NSString *, id> *)change
                        context:(nullable void *)context
 {
   NSAssert(context, @"missing context keyPath:%@ object:%@ change:%@", keyPath, object, change);
@@ -359,7 +359,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 @implementation FBKVOController
 {
-  NSMapTable *_objectInfosMap;
+  NSMapTable<id, NSMutableSet<_FBKVOInfo *> *> *_objectInfosMap;
   OSSpinLock _lock;
 }
 
@@ -539,15 +539,14 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 }
 
 
-- (void)observe:(nullable id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
+- (void)observe:(nullable id)object keyPaths:(NSArray<NSString *> *)keyPaths options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
 {
   NSAssert(0 != keyPaths.count && NULL != block, @"missing required parameters observe:%@ keyPath:%@ block:%p", object, keyPaths, block);
   if (nil == object || 0 == keyPaths.count || NULL == block) {
     return;
   }
   
-  for (NSString *keyPath in keyPaths)
-  {
+  for (NSString *keyPath in keyPaths) {
     [self observe:object keyPath:keyPath options:options block:block];
   }
 }
@@ -567,7 +566,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [self _observe:object info:info];
 }
 
-- (void)observe:(nullable id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options action:(SEL)action
+- (void)observe:(nullable id)object keyPaths:(NSArray<NSString *> *)keyPaths options:(NSKeyValueObservingOptions)options action:(SEL)action
 {
   NSAssert(0 != keyPaths.count && NULL != action, @"missing required parameters observe:%@ keyPath:%@ action:%@", object, keyPaths, NSStringFromSelector(action));
   NSAssert([_observer respondsToSelector:action], @"%@ does not respond to %@", _observer, NSStringFromSelector(action));
@@ -575,8 +574,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
     return;
   }
   
-  for (NSString *keyPath in keyPaths)
-  {
+  for (NSString *keyPath in keyPaths) {
     [self observe:object keyPath:keyPath options:options action:action];
   }
 }
@@ -595,15 +593,14 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [self _observe:object info:info];
 }
 
-- (void)observe:(nullable id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options context:(nullable void *)context
+- (void)observe:(nullable id)object keyPaths:(NSArray<NSString *> *)keyPaths options:(NSKeyValueObservingOptions)options context:(nullable void *)context
 {
   NSAssert(0 != keyPaths.count, @"missing required parameters observe:%@ keyPath:%@", object, keyPaths);
   if (nil == object || 0 == keyPaths.count) {
     return;
   }
   
-  for (NSString *keyPath in keyPaths)
-  {
+  for (NSString *keyPath in keyPaths) {
     [self observe:object keyPath:keyPath options:options context:context];
   }
 }
