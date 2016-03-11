@@ -8,7 +8,10 @@
  */
 
 #import <Foundation/Foundation.h>
+
 #import "FBKVOController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (FBKVOController)
 
@@ -21,3 +24,5 @@
 @property (nonatomic, strong) FBKVOController *KVOControllerNonRetaining;
 
 @end
+
+NS_ASSUME_NONNULL_END

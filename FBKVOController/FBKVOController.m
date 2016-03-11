@@ -16,6 +16,8 @@
 #error This file must be compiled with ARC. Convert your project to ARC or specify the -fobjc-arc flag.
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark Utilities -
 
 static NSString *describe_option(NSKeyValueObservingOptions option)
@@ -98,7 +100,12 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   FBKVONotificationBlock _block;
 }
 
-- (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block action:(SEL)action context:(void *)context
+- (instancetype)initWithController:(FBKVOController *)controller
+                           keyPath:(NSString *)keyPath
+                           options:(NSKeyValueObservingOptions)options
+                             block:(nullable FBKVONotificationBlock)block
+                            action:(nullable SEL)action
+                           context:(nullable void *)context
 {
   self = [super init];
   if (nil != self) {
@@ -184,13 +191,13 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 + (instancetype)sharedController;
 
 /** observe an object, info pair */
-- (void)observe:(id)object info:(_FBKVOInfo *)info;
+- (void)observe:(id)object info:(nullable _FBKVOInfo *)info;
 
 /** unobserve an object, info pair */
-- (void)unobserve:(id)object info:(_FBKVOInfo *)info;
+- (void)unobserve:(id)object info:(nullable _FBKVOInfo *)info;
 
 /** unobserve an object with a set of infos */
-- (void)unobserve:(id)object infos:(NSSet *)infos;
+- (void)unobserve:(id)object infos:(nullable NSSet *)infos;
 
 @end
 
@@ -255,7 +262,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return s;
 }
 
-- (void)observe:(id)object info:(_FBKVOInfo *)info
+- (void)observe:(id)object info:(nullable _FBKVOInfo *)info
 {
   if (nil == info) {
     return;
@@ -270,7 +277,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [object addObserver:self forKeyPath:info->_keyPath options:info->_options context:(void *)info];
 }
 
-- (void)unobserve:(id)object info:(_FBKVOInfo *)info
+- (void)unobserve:(id)object info:(nullable _FBKVOInfo *)info
 {
   if (nil == info) {
     return;
@@ -285,7 +292,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
 }
 
-- (void)unobserve:(id)object infos:(NSSet *)infos
+- (void)unobserve:(id)object infos:(nullable NSSet *)infos
 {
   if (0 == infos.count) {
     return;
@@ -304,7 +311,10 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath
+                      ofObject:(nullable id)object
+                        change:(nullable NSDictionary *)change
+                       context:(nullable void *)context
 {
   NSAssert(context, @"missing context keyPath:%@ object:%@ change:%@", keyPath, object, change);
   
@@ -355,12 +365,12 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 #pragma mark Lifecycle -
 
-+ (instancetype)controllerWithObserver:(id)observer
++ (instancetype)controllerWithObserver:(nullable id)observer
 {
   return [[self alloc] initWithObserver:observer];
 }
 
-- (instancetype)initWithObserver:(id)observer retainObserved:(BOOL)retainObserved
+- (instancetype)initWithObserver:(nullable id)observer retainObserved:(BOOL)retainObserved
 {
   self = [super init];
   if (nil != self) {
@@ -372,7 +382,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return self;
 }
 
-- (instancetype)initWithObserver:(id)observer
+- (instancetype)initWithObserver:(nullable id)observer
 {
   return [self initWithObserver:observer retainObserved:YES];
 }
@@ -514,7 +524,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 
 #pragma mark API -
 
-- (void)observe:(id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
+- (void)observe:(nullable id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
 {
   NSAssert(0 != keyPath.length && NULL != block, @"missing required parameters observe:%@ keyPath:%@ block:%p", object, keyPath, block);
   if (nil == object || 0 == keyPath.length || NULL == block) {
@@ -529,7 +539,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 }
 
 
-- (void)observe:(id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
+- (void)observe:(nullable id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
 {
   NSAssert(0 != keyPaths.count && NULL != block, @"missing required parameters observe:%@ keyPath:%@ block:%p", object, keyPaths, block);
   if (nil == object || 0 == keyPaths.count || NULL == block) {
@@ -542,7 +552,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
 }
 
-- (void)observe:(id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options action:(SEL)action
+- (void)observe:(nullable id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options action:(SEL)action
 {
   NSAssert(0 != keyPath.length && NULL != action, @"missing required parameters observe:%@ keyPath:%@ action:%@", object, keyPath, NSStringFromSelector(action));
   NSAssert([_observer respondsToSelector:action], @"%@ does not respond to %@", _observer, NSStringFromSelector(action));
@@ -557,7 +567,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [self _observe:object info:info];
 }
 
-- (void)observe:(id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options action:(SEL)action
+- (void)observe:(nullable id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options action:(SEL)action
 {
   NSAssert(0 != keyPaths.count && NULL != action, @"missing required parameters observe:%@ keyPath:%@ action:%@", object, keyPaths, NSStringFromSelector(action));
   NSAssert([_observer respondsToSelector:action], @"%@ does not respond to %@", _observer, NSStringFromSelector(action));
@@ -571,7 +581,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
 }
 
-- (void)observe:(id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+- (void)observe:(nullable id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(nullable void *)context
 {
   NSAssert(0 != keyPath.length, @"missing required parameters observe:%@ keyPath:%@", object, keyPath);
   if (nil == object || 0 == keyPath.length) {
@@ -585,7 +595,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [self _observe:object info:info];
 }
 
-- (void)observe:(id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options context:(void *)context
+- (void)observe:(nullable id)object keyPaths:(NSArray *)keyPaths options:(NSKeyValueObservingOptions)options context:(nullable void *)context
 {
   NSAssert(0 != keyPaths.count, @"missing required parameters observe:%@ keyPath:%@", object, keyPaths);
   if (nil == object || 0 == keyPaths.count) {
@@ -598,7 +608,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   }
 }
 
-- (void)unobserve:(id)object keyPath:(NSString *)keyPath
+- (void)unobserve:(nullable id)object keyPath:(NSString *)keyPath
 {
   // create representative info
   _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath];
@@ -607,7 +617,7 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   [self _unobserve:object info:info];
 }
 
-- (void)unobserve:(id)object
+- (void)unobserve:(nullable id)object
 {
   if (nil == object) {
     return;
@@ -622,3 +632,5 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
