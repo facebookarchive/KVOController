@@ -308,6 +308,26 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
                                                   context:NULL];
 }
 
+- (void)testObserveKeyPathsOptionsContextUnobserveWithinBlockWithOptionInitial
+{
+  id<FBKVOTestObserving> observer = mockProtocol(@protocol(FBKVOTestObserving));
+  FBKVOController *controller = [FBKVOController controllerWithObserver:observer];
+  FBKVOTestCircle *circle = [FBKVOTestCircle circle];
+
+  circle.radius = 1.0;
+  __block float lastObservedRadius = 0.f;
+  [controller observe:circle
+              keyPath:radius
+              options:NSKeyValueObservingOptionInitial
+                block:^(id observer, id object, NSDictionary *change) {
+                  lastObservedRadius = circle.radius;
+                  [controller unobserve:circle];
+                }];
+
+  XCTAssertNoThrow(circle.radius = 2.f);
+  XCTAssertEqual(lastObservedRadius, 1.f);
+}
+
 - (void)testCustomActionOptionsBasic
 {
   FBKVOTestCircle *circle = [FBKVOTestCircle circle];
