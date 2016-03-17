@@ -462,7 +462,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   // check for info existence
   _FBKVOInfo *existingInfo = [infos member:info];
   if (nil != existingInfo) {
-    NSLog(@"observation info already exists %@", existingInfo);
+    // observation info already exists; do not observe it again
     
     // unlock and return
     OSSpinLockUnlock(&_lock);
