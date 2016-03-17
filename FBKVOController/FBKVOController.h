@@ -32,7 +32,7 @@
  For example:
 
  FBKVOClassKeyPath(NSString, length) => @"length"
- FBKVOClassKeyPath(NSString, lowecaseString, length) => @"lowercaseString.length"
+ FBKVOClassKeyPath(NSString, lowercaseString.length) => @"lowercaseString.length"
  */
 #define FBKVOClassKeyPath(CLASS, KEYPATH) \
 @(((void)(NO && ((void)((CLASS *)(nil)).KEYPATH, NO)), #KEYPATH))
