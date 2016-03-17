@@ -9,6 +9,34 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ This macro ensures that key path exists at compile time.
+ Given a real receiver with a key path as you would call it, it verifies at compile time that the key path exists, without calling it.
+
+ For example:
+
+ FBKVOKeyPath(string.length) => @"length"
+
+ Or even the complex case:
+
+ FBKVOKeyPath(string.lowercaseString.length) => @"lowercaseString.length".
+ */
+#define FBKVOKeyPath(KEYPATH) \
+@(((void)(NO && ((void)KEYPATH, NO)), \
+({ char *fbkvokeypath = strchr(#KEYPATH, '.'); NSCAssert(fbkvokeypath, @"Provided key path is invalid."); fbkvokeypath + 1; })))
+
+/**
+ This macro ensures that key path exists at compile time.
+ Given a receiver type and a key path, it verifies at compile time that the key path exists, without calling it.
+
+ For example:
+
+ FBKVOClassKeyPath(NSString, length) => @"length"
+ FBKVOClassKeyPath(NSString, lowecaseString, length) => @"lowercaseString.length"
+ */
+#define FBKVOClassKeyPath(CLASS, KEYPATH) \
+@(((void)(NO && ((void)((CLASS *)(nil)).KEYPATH, NO)), #KEYPATH))
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
