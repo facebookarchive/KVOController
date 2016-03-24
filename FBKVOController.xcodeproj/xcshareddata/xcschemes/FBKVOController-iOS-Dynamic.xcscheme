@@ -11,14 +11,13 @@
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "YES"
-            hideIssues = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D719F2B41B7396AF0090C2FB"
+               BlueprintIdentifier = "81EC40C51CA3620A00BD9226"
                BuildableName = "KVOController.framework"
-               BlueprintName = "KVOController-OSX"
-               ReferencedContainer = "container:DynamicFramework.xcodeproj">
+               BlueprintName = "FBKVOController-iOS-Dynamic"
+               ReferencedContainer = "container:FBKVOController.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D719F2B41B7396AF0090C2FB"
-            BuildableName = "KVOController.framework"
-            BlueprintName = "KVOController-OSX"
-            ReferencedContainer = "container:DynamicFramework.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -55,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D719F2B41B7396AF0090C2FB"
+            BlueprintIdentifier = "81EC40C51CA3620A00BD9226"
             BuildableName = "KVOController.framework"
-            BlueprintName = "KVOController-OSX"
-            ReferencedContainer = "container:DynamicFramework.xcodeproj">
+            BlueprintName = "FBKVOController-iOS-Dynamic"
+            ReferencedContainer = "container:FBKVOController.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -73,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D719F2B41B7396AF0090C2FB"
+            BlueprintIdentifier = "81EC40C51CA3620A00BD9226"
             BuildableName = "KVOController.framework"
-            BlueprintName = "KVOController-OSX"
-            ReferencedContainer = "container:DynamicFramework.xcodeproj">
+            BlueprintName = "FBKVOController-iOS-Dynamic"
+            ReferencedContainer = "container:FBKVOController.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
