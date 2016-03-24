@@ -11,14 +11,13 @@
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "YES"
-            hideIssues = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D719F2971B73962E0090C2FB"
+               BlueprintIdentifier = "81EC40F71CA3639C00BD9226"
                BuildableName = "KVOController.framework"
-               BlueprintName = "KVOController-iOS"
-               ReferencedContainer = "container:DynamicFramework.xcodeproj">
+               BlueprintName = "FBKVOController-OSX-Dynamic"
+               ReferencedContainer = "container:FBKVOController.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D719F2971B73962E0090C2FB"
+            BlueprintIdentifier = "81EC40F71CA3639C00BD9226"
             BuildableName = "KVOController.framework"
-            BlueprintName = "KVOController-iOS"
-            ReferencedContainer = "container:DynamicFramework.xcodeproj">
+            BlueprintName = "FBKVOController-OSX-Dynamic"
+            ReferencedContainer = "container:FBKVOController.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D719F2971B73962E0090C2FB"
+            BlueprintIdentifier = "81EC40F71CA3639C00BD9226"
             BuildableName = "KVOController.framework"
-            BlueprintName = "KVOController-iOS"
-            ReferencedContainer = "container:DynamicFramework.xcodeproj">
+            BlueprintName = "FBKVOController-OSX-Dynamic"
+            ReferencedContainer = "container:FBKVOController.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
