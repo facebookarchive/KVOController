@@ -29,6 +29,11 @@
 		81BD70C11CA4B57F00FB8E4D /* KVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = 81EC40D81CA3623D00BD9226 /* KVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81BD70C21CA4B57F00FB8E4D /* FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = ECEA610618A49C620064AFF4 /* FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81BD70C31CA4B57F00FB8E4D /* NSObject+FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B05A2F1A076ADD0022AB70 /* NSObject+FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81BD70FE1CA607F500FB8E4D /* KVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = 81EC40D81CA3623D00BD9226 /* KVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81BD70FF1CA607F500FB8E4D /* NSObject+FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B05A2F1A076ADD0022AB70 /* NSObject+FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81BD71001CA607F500FB8E4D /* NSObject+FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B05A2D1A076AD70022AB70 /* NSObject+FBKVOController.m */; };
+		81BD71011CA607F500FB8E4D /* FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = ECEA610618A49C620064AFF4 /* FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81BD71021CA607F500FB8E4D /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEA610818A49C620064AFF4 /* FBKVOController.m */; };
 		81EC40D01CA3621E00BD9226 /* NSObject+FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B05A2F1A076ADD0022AB70 /* NSObject+FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81EC40D11CA3621E00BD9226 /* NSObject+FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B05A2D1A076AD70022AB70 /* NSObject+FBKVOController.m */; };
 		81EC40D21CA3621E00BD9226 /* FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = ECEA610618A49C620064AFF4 /* FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -277,6 +282,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81BD70FE1CA607F500FB8E4D /* KVOController.h in Headers */,
+				81BD71011CA607F500FB8E4D /* FBKVOController.h in Headers */,
+				81BD70FF1CA607F500FB8E4D /* NSObject+FBKVOController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +592,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81BD71021CA607F500FB8E4D /* FBKVOController.m in Sources */,
+				81BD71001CA607F500FB8E4D /* NSObject+FBKVOController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,7 +676,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "FBKVOController-iOS-Dynamic copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/FBKVOController/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -698,7 +708,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "FBKVOController-iOS-Dynamic copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/FBKVOController/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1062,6 +1072,7 @@
 				81BD70F11CA4B98D00FB8E4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81EC40CD1CA3620A00BD9226 /* Build configuration list for PBXNativeTarget "FBKVOController-iOS-Dynamic" */ = {
 			isa = XCConfigurationList;
