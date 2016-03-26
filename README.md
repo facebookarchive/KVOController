@@ -35,7 +35,7 @@ While simple, the above example is complete. A clock view creates a KVO controll
 Note: the observer specified must support weak references. The zeroing weak reference guards against notification of a deallocated observer instance.
 
 #### NSObject Category
-For an even easier usage, just `#import <KVOController/FBKVOController.h>` for an automatic `KVOController` property on all objects.
+For an even easier usage, just `#import <KVOController/NSObject+FBKVOController.h>` for an automatic `KVOController` property on all objects.
 
 ```objc
 [self.KVOController observe:clock keyPath:@"date" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew action:@selector(updateClockWithDateChange:)];
@@ -66,7 +66,7 @@ Alternatively, drag and drop FBKVOController.h and FBKVOController.m into your X
 
 Having installed using CocoaPods or Carthage, add the following to import in Objective-C:
 ```objective-c
-#import <KVOController/FBKVOController.h>
+#import <KVOController/KVOController.h>
 ```
 
 ## Testing
