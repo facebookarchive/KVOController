@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'KVOController'
-  spec.version      = '1.0.3'
+  spec.version      = '1.1.0'
   spec.license      =  { :type => 'BSD' }
   spec.homepage     = 'https://github.com/facebook/KVOController'
   spec.authors      = { 'Kimon Tsinteris' => 'kimon@mac.com' }
@@ -12,10 +12,8 @@ Pod::Spec.new do |spec|
                       No exceptions on observer removal.
                       Implicit observer removal on controller dealloc.
                       Thread-safety with special guards against observer resurrection.
-                      
-                      Single class: FBKVOController
                       DESC
-  spec.source       = { :git => 'https://github.com/facebook/KVOController.git', :tag => spec.version.to_s }
+  spec.source       = { :git => 'https://github.com/facebook/KVOController.git', :tag => "v#{spec.version.to_s}" }
   spec.source_files = 'FBKVOController/*.{h,m}'
   spec.requires_arc = true
 
