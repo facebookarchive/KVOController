@@ -77,8 +77,10 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  */
 - (instancetype)initWithObserver:(nullable id)observer;
 
-/// The observer notified on key-value change. Specified on initialization.
-@property (nullable, atomic, weak, readonly) id observer;
+/**
+ The observer notified on key-value change. Specified on initialization.
+ */
+@property (nullable, nonatomic, weak, readonly) id observer;
 
 /**
  @abstract Registers observer for key-value change notification.
