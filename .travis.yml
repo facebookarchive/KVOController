@@ -12,9 +12,8 @@ env:
 install:
 - |
   if [ "$TEST_TYPE" = "iOS" ]; then
+    gem install xcpretty -N --no-ri --no-rdoc
     gem update cocoapods
-    brew update
-    brew reinstall xctool
     pod install
   elif [ "$TEST_TYPE" = Carthage ]; then    
     brew install carthage || brew upgrade carthage
@@ -22,7 +21,8 @@ install:
 script:
 - |
   if [ "$TEST_TYPE" = "iOS" ]; then
-    xctool -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator build test GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+    set -o pipefail
+    xcodebuild test -workspace FBKVOController.xcworkspace -scheme FBKVOController -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 4s" -destination "platform=iOS Simulator,name=iPhone 6 Plus" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcpretty -c
   elif [ "$TEST_TYPE" = CocoaPods ]; then
     pod lib lint KVOController.podspec
     pod lib lint --use-libraries KVOController.podspec
