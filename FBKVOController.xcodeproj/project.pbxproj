@@ -109,7 +109,6 @@
 		ECAFBD5E18BD47BE009B4EC6 /* KVOController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = KVOController.podspec; sourceTree = "<group>"; };
 		ECEA60FE18A49C620064AFF4 /* libFBKVOController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFBKVOController.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECEA610118A49C620064AFF4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		ECEA610518A49C620064AFF4 /* FBKVOController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FBKVOController-Prefix.pch"; sourceTree = "<group>"; };
 		ECEA610618A49C620064AFF4 /* FBKVOController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBKVOController.h; sourceTree = "<group>"; };
 		ECEA610818A49C620064AFF4 /* FBKVOController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBKVOController.m; sourceTree = "<group>"; tabWidth = 4; };
 		ECEA610E18A49C620064AFF4 /* FBKVOControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FBKVOControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				81EC40EE1CA3630200BD9226 /* Info.plist */,
-				ECEA610518A49C620064AFF4 /* FBKVOController-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -985,8 +983,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/FBKVOController.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FBKVOController/FBKVOController-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
@@ -1001,8 +997,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/FBKVOController.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FBKVOController/FBKVOController-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
@@ -1015,8 +1009,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23BE7F32E410B31E573B654C /* Pods-FBKVOControllerTests.debug.xcconfig */;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FBKVOController/FBKVOController-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1031,8 +1023,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 14CBB94C87E908D5977AA52D /* Pods-FBKVOControllerTests.release.xcconfig */;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FBKVOController/FBKVOController-Prefix.pch";
 				INFOPLIST_FILE = "FBKVOControllerTests/FBKVOControllerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
