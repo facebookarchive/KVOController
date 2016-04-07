@@ -1014,6 +1014,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "FBKVOControllerTests/FBKVOControllerTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1024,6 +1025,7 @@
 			baseConfigurationReference = 14CBB94C87E908D5977AA52D /* Pods-FBKVOControllerTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "FBKVOControllerTests/FBKVOControllerTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
