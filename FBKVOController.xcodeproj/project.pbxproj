@@ -44,7 +44,6 @@
 		81EC41111CA3640600BD9226 /* FBKVOController.h in Headers */ = {isa = PBXBuildFile; fileRef = ECEA610618A49C620064AFF4 /* FBKVOController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81EC41151CA3640B00BD9226 /* NSObject+FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B05A2D1A076AD70022AB70 /* NSObject+FBKVOController.m */; };
 		81EC41161CA3640B00BD9226 /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEA610818A49C620064AFF4 /* FBKVOController.m */; };
-		C2F52F758CAD49A0B9569C07 /* libPods-FBKVOControllerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CEF702BB5574A90B448BF09 /* libPods-FBKVOControllerTests.a */; };
 		EC8BB5AE18A5792D00EB2793 /* FBKVOTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = EC8BB5AD18A5792D00EB2793 /* FBKVOTesting.m */; };
 		ECEA610218A49C620064AFF4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECEA610118A49C620064AFF4 /* Foundation.framework */; };
 		ECEA610718A49C620064AFF4 /* FBKVOController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECEA610618A49C620064AFF4 /* FBKVOController.h */; };
@@ -55,6 +54,7 @@
 		ECEA611618A49C620064AFF4 /* libFBKVOController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECEA60FE18A49C620064AFF4 /* libFBKVOController.a */; };
 		ECEA611C18A49C620064AFF4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECEA611A18A49C620064AFF4 /* InfoPlist.strings */; };
 		ECEA611E18A49C620064AFF4 /* FBKVOControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEA611D18A49C620064AFF4 /* FBKVOControllerTests.m */; };
+		F2755F5F5CED1DAAAFED68B2 /* libPods-FBKVOControllerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044A6FECA9893D2B98CA99B7 /* libPods-FBKVOControllerTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,11 +89,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		14CBB94C87E908D5977AA52D /* Pods-FBKVOControllerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBKVOControllerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests.release.xcconfig"; sourceTree = "<group>"; };
-		23BE7F32E410B31E573B654C /* Pods-FBKVOControllerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBKVOControllerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		044A6FECA9893D2B98CA99B7 /* libPods-FBKVOControllerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FBKVOControllerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2316F70E2DD4D80B87440A05 /* Pods-FBKVOControllerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBKVOControllerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3E0BB792112F905E950F2AE4 /* Pods-FBKVOControllerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FBKVOControllerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests.release.xcconfig"; sourceTree = "<group>"; };
 		46B05A2D1A076AD70022AB70 /* NSObject+FBKVOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FBKVOController.m"; sourceTree = "<group>"; };
 		46B05A2F1A076ADD0022AB70 /* NSObject+FBKVOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+FBKVOController.h"; sourceTree = "<group>"; };
-		5CEF702BB5574A90B448BF09 /* libPods-FBKVOControllerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FBKVOControllerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BD70C81CA4B57F00FB8E4D /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BD70EA1CA4B98D00FB8E4D /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81EC40C61CA3620A00BD9226 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,18 +164,18 @@
 				ECEA611318A49C620064AFF4 /* UIKit.framework in Frameworks */,
 				ECEA611618A49C620064AFF4 /* libFBKVOController.a in Frameworks */,
 				ECEA611118A49C620064AFF4 /* Foundation.framework in Frameworks */,
-				C2F52F758CAD49A0B9569C07 /* libPods-FBKVOControllerTests.a in Frameworks */,
+				F2755F5F5CED1DAAAFED68B2 /* libPods-FBKVOControllerTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		29FD7E1F86281B4E7BCFC05F /* Pods */ = {
+		DE977FB840686E597267F657 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				23BE7F32E410B31E573B654C /* Pods-FBKVOControllerTests.debug.xcconfig */,
-				14CBB94C87E908D5977AA52D /* Pods-FBKVOControllerTests.release.xcconfig */,
+				2316F70E2DD4D80B87440A05 /* Pods-FBKVOControllerTests.debug.xcconfig */,
+				3E0BB792112F905E950F2AE4 /* Pods-FBKVOControllerTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -192,7 +192,7 @@
 				ECEA611718A49C620064AFF4 /* FBKVOControllerTests */,
 				ECEA610018A49C620064AFF4 /* Frameworks */,
 				ECEA60FF18A49C620064AFF4 /* Products */,
-				29FD7E1F86281B4E7BCFC05F /* Pods */,
+				DE977FB840686E597267F657 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -217,7 +217,7 @@
 				ECEA610118A49C620064AFF4 /* Foundation.framework */,
 				ECEA610F18A49C620064AFF4 /* XCTest.framework */,
 				ECEA611218A49C620064AFF4 /* UIKit.framework */,
-				5CEF702BB5574A90B448BF09 /* libPods-FBKVOControllerTests.a */,
+				044A6FECA9893D2B98CA99B7 /* libPods-FBKVOControllerTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -403,12 +403,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ECEA612418A49C620064AFF4 /* Build configuration list for PBXNativeTarget "FBKVOControllerTests" */;
 			buildPhases = (
-				5B6001524D344191A688BFB3 /* Check Pods Manifest.lock */,
+				BEB3825BB272703E7F8D5FAD /* 📦 Check Pods Manifest.lock */,
 				ECEA610A18A49C620064AFF4 /* Sources */,
 				ECEA610B18A49C620064AFF4 /* Frameworks */,
 				ECEA610C18A49C620064AFF4 /* Resources */,
-				867FB967C7C94A9BA9FCBA93 /* Copy Pods Resources */,
-				F74A8EA422F48F74748C5C25 /* Embed Pods Frameworks */,
+				EC1E7A550C7FEF37584E8438 /* 📦 Embed Pods Frameworks */,
+				4815293B1AA905E7D81CAD3F /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -503,14 +503,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5B6001524D344191A688BFB3 /* Check Pods Manifest.lock */ = {
+		4815293B1AA905E7D81CAD3F /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEB3825BB272703E7F8D5FAD /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,19 +533,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		867FB967C7C94A9BA9FCBA93 /* Copy Pods Resources */ = {
+		EC1E7A550C7FEF37584E8438 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ECEA612718A49DDD0064AFF4 /* ShellScript */ = {
@@ -558,21 +573,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nlipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/${FRAMEWORK_VERSION}/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/${FRAMEWORK_VERSION}/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/${FRAMEWORK_VERSION}/${SF_TARGET_NAME}\"\n";
-		};
-		F74A8EA422F48F74748C5C25 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FBKVOControllerTests/Pods-FBKVOControllerTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1007,7 +1007,7 @@
 		};
 		ECEA612518A49C620064AFF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23BE7F32E410B31E573B654C /* Pods-FBKVOControllerTests.debug.xcconfig */;
+			baseConfigurationReference = 2316F70E2DD4D80B87440A05 /* Pods-FBKVOControllerTests.debug.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1022,7 +1022,7 @@
 		};
 		ECEA612618A49C620064AFF4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14CBB94C87E908D5977AA52D /* Pods-FBKVOControllerTests.release.xcconfig */;
+			baseConfigurationReference = 3E0BB792112F905E950F2AE4 /* Pods-FBKVOControllerTests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "FBKVOControllerTests/FBKVOControllerTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.${PRODUCT_NAME:rfc1034identifier}";
