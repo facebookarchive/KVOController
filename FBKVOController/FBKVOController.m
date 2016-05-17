@@ -1,7 +1,7 @@
 /**
  Copyright (c) 2014-present, Facebook, Inc.
  All rights reserved.
- 
+
  This source code is licensed under the BSD-style license found in the
  LICENSE file in the root directory of this source tree. An additional grant
  of patent rights can be found in the PATENTS file in the same directory.
@@ -9,8 +9,8 @@
 
 #import "FBKVOController.h"
 
-#import <libkern/OSAtomic.h>
 #import <objc/message.h>
+#import <pthread/pthread.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Convert your project to ARC or specify the -fobjc-arc flag.
@@ -58,12 +58,12 @@ static NSUInteger enumerate_flags(NSUInteger *ptrFlags)
   if (!ptrFlags) {
     return 0;
   }
-  
+
   NSUInteger flags = *ptrFlags;
   if (!flags) {
     return 0;
   }
-  
+
   NSUInteger flag = 1 << __builtin_ctzl(flags);
   flags &= ~flag;
   *ptrFlags = flags;
@@ -216,7 +216,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 @implementation _FBKVOSharedController
 {
   NSHashTable<_FBKVOInfo *> *_infos;
-  OSSpinLock _lock;
+  pthread_mutex_t _mutex;
 }
 
 + (instancetype)sharedController
@@ -246,30 +246,35 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
       _infos = [infos initWithOptions:NSPointerFunctionsZeroingWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
 #pragma clang diagnostic pop
     }
-    
+
 #endif
-    _lock = OS_SPINLOCK_INIT;
+    pthread_mutex_init(&_mutex, NULL);
   }
   return self;
+}
+
+- (void)dealloc
+{
+  pthread_mutex_destroy(&_mutex);
 }
 
 - (NSString *)debugDescription
 {
   NSMutableString *s = [NSMutableString stringWithFormat:@"<%@:%p", NSStringFromClass([self class]), self];
-  
+
   // lock
-  OSSpinLockLock(&_lock);
-  
+  pthread_mutex_lock(&_mutex);
+
   NSMutableArray *infoDescriptions = [NSMutableArray arrayWithCapacity:_infos.count];
   for (_FBKVOInfo *info in _infos) {
     [infoDescriptions addObject:info.debugDescription];
   }
-  
+
   [s appendFormat:@" contexts:%@", infoDescriptions];
-  
+
   // unlock
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_mutex);
+
   [s appendString:@">"];
   return s;
 }
@@ -279,12 +284,12 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == info) {
     return;
   }
-  
+
   // register info
-  OSSpinLockLock(&_lock);
+  pthread_mutex_lock(&_mutex);
   [_infos addObject:info];
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_mutex);
+
   // add observer
   [object addObserver:self forKeyPath:info->_keyPath options:info->_options context:(void *)info];
 
@@ -304,12 +309,12 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == info) {
     return;
   }
-  
+
   // unregister info
-  OSSpinLockLock(&_lock);
+  pthread_mutex_lock(&_mutex);
   [_infos removeObject:info];
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_mutex);
+
   // remove observer
   if (info->_state == _FBKVOInfoStateObserving) {
     [object removeObserver:self forKeyPath:info->_keyPath context:(void *)info];
@@ -322,14 +327,14 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (0 == infos.count) {
     return;
   }
-  
+
   // unregister info
-  OSSpinLockLock(&_lock);
+  pthread_mutex_lock(&_mutex);
   for (_FBKVOInfo *info in infos) {
     [_infos removeObject:info];
   }
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_mutex);
+
   // remove observer
   for (_FBKVOInfo *info in infos) {
     if (info->_state == _FBKVOInfoStateObserving) {
@@ -345,26 +350,26 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
                        context:(nullable void *)context
 {
   NSAssert(context, @"missing context keyPath:%@ object:%@ change:%@", keyPath, object, change);
-  
+
   _FBKVOInfo *info;
-  
+
   {
     // lookup context in registered infos, taking out a strong reference only if it exists
-    OSSpinLockLock(&_lock);
+    pthread_mutex_lock(&_mutex);
     info = [_infos member:(__bridge id)context];
-    OSSpinLockUnlock(&_lock);
+    pthread_mutex_unlock(&_mutex);
   }
-  
+
   if (nil != info) {
-    
+
     // take strong reference to controller
     FBKVOController *controller = info->_controller;
     if (nil != controller) {
-      
+
       // take strong reference to observer
       id observer = controller.observer;
       if (nil != observer) {
-        
+
         // dispatch custom block or action, fall back to default action
         if (info->_block) {
           info->_block(observer, object, change);
@@ -388,7 +393,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 @implementation FBKVOController
 {
   NSMapTable<id, NSMutableSet<_FBKVOInfo *> *> *_objectInfosMap;
-  OSSpinLock _lock;
+  pthread_mutex_t _lock;
 }
 
 #pragma mark Lifecycle -
@@ -405,7 +410,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
     _observer = observer;
     NSPointerFunctionsOptions keyOptions = retainObserved ? NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPointerPersonality : NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality;
     _objectInfosMap = [[NSMapTable alloc] initWithKeyOptions:keyOptions valueOptions:NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPersonality capacity:0];
-    _lock = OS_SPINLOCK_INIT;
+    pthread_mutex_init(&_lock, NULL);
   }
   return self;
 }
@@ -418,6 +423,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 - (void)dealloc
 {
   [self unobserveAll];
+  pthread_mutex_destroy(&_lock);
 }
 
 #pragma mark Properties -
@@ -426,14 +432,14 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 {
   NSMutableString *s = [NSMutableString stringWithFormat:@"<%@:%p", NSStringFromClass([self class]), self];
   [s appendFormat:@" observer:<%@:%p>", NSStringFromClass([_observer class]), _observer];
-  
+
   // lock
-  OSSpinLockLock(&_lock);
-  
+  pthread_mutex_lock(&_lock);
+
   if (0 != _objectInfosMap.count) {
     [s appendString:@"\n  "];
   }
-  
+
   for (id object in _objectInfosMap) {
     NSMutableSet *infos = [_objectInfosMap objectForKey:object];
     NSMutableArray *infoDescriptions = [NSMutableArray arrayWithCapacity:infos.count];
@@ -442,10 +448,10 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
     }];
     [s appendFormat:@"%@ -> %@", object, infoDescriptions];
   }
-  
+
   // unlock
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_lock);
+
   [s appendString:@">"];
   return s;
 }
@@ -455,58 +461,58 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 - (void)_observe:(id)object info:(_FBKVOInfo *)info
 {
   // lock
-  OSSpinLockLock(&_lock);
-  
+  pthread_mutex_lock(&_lock);
+
   NSMutableSet *infos = [_objectInfosMap objectForKey:object];
-  
+
   // check for info existence
   _FBKVOInfo *existingInfo = [infos member:info];
   if (nil != existingInfo) {
     // observation info already exists; do not observe it again
-    
+
     // unlock and return
-    OSSpinLockUnlock(&_lock);
+    pthread_mutex_unlock(&_lock);
     return;
   }
-  
+
   // lazilly create set of infos
   if (nil == infos) {
     infos = [NSMutableSet set];
     [_objectInfosMap setObject:infos forKey:object];
   }
-  
+
   // add info and oberve
   [infos addObject:info];
-  
+
   // unlock prior to callout
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_lock);
+
   [[_FBKVOSharedController sharedController] observe:object info:info];
 }
 
 - (void)_unobserve:(id)object info:(_FBKVOInfo *)info
 {
   // lock
-  OSSpinLockLock(&_lock);
-  
+  pthread_mutex_lock(&_lock);
+
   // get observation infos
   NSMutableSet *infos = [_objectInfosMap objectForKey:object];
-  
+
   // lookup registered info instance
   _FBKVOInfo *registeredInfo = [infos member:info];
-  
+
   if (nil != registeredInfo) {
     [infos removeObject:registeredInfo];
-    
+
     // remove no longer used infos
     if (0 == infos.count) {
       [_objectInfosMap removeObjectForKey:object];
     }
   }
-  
+
   // unlock
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_lock);
+
   // unobserve
   [[_FBKVOSharedController sharedController] unobserve:object info:registeredInfo];
 }
@@ -514,16 +520,16 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 - (void)_unobserve:(id)object
 {
   // lock
-  OSSpinLockLock(&_lock);
-  
+  pthread_mutex_lock(&_lock);
+
   NSMutableSet *infos = [_objectInfosMap objectForKey:object];
-  
+
   // remove infos
   [_objectInfosMap removeObjectForKey:object];
-  
+
   // unlock
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_lock);
+
   // unobserve
   [[_FBKVOSharedController sharedController] unobserve:object infos:infos];
 }
@@ -531,18 +537,18 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 - (void)_unobserveAll
 {
   // lock
-  OSSpinLockLock(&_lock);
-  
+  pthread_mutex_lock(&_lock);
+
   NSMapTable *objectInfoMaps = [_objectInfosMap copy];
-  
+
   // clear table and map
   [_objectInfosMap removeAllObjects];
-  
+
   // unlock
-  OSSpinLockUnlock(&_lock);
-  
+  pthread_mutex_unlock(&_lock);
+
   _FBKVOSharedController *shareController = [_FBKVOSharedController sharedController];
-  
+
   for (id object in objectInfoMaps) {
     // unobserve each registered object and infos
     NSSet *infos = [objectInfoMaps objectForKey:object];
@@ -558,10 +564,10 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object || 0 == keyPath.length || NULL == block) {
     return;
   }
-  
+
   // create info
   _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath options:options block:block];
-  
+
   // observe object with info
   [self _observe:object info:info];
 }
@@ -573,7 +579,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object || 0 == keyPaths.count || NULL == block) {
     return;
   }
-  
+
   for (NSString *keyPath in keyPaths) {
     [self observe:object keyPath:keyPath options:options block:block];
   }
@@ -586,10 +592,10 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object || 0 == keyPath.length || NULL == action) {
     return;
   }
-  
+
   // create info
   _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath options:options action:action];
-  
+
   // observe object with info
   [self _observe:object info:info];
 }
@@ -601,7 +607,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object || 0 == keyPaths.count || NULL == action) {
     return;
   }
-  
+
   for (NSString *keyPath in keyPaths) {
     [self observe:object keyPath:keyPath options:options action:action];
   }
@@ -613,10 +619,10 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object || 0 == keyPath.length) {
     return;
   }
-  
+
   // create info
   _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath options:options context:context];
-  
+
   // observe object with info
   [self _observe:object info:info];
 }
@@ -627,7 +633,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object || 0 == keyPaths.count) {
     return;
   }
-  
+
   for (NSString *keyPath in keyPaths) {
     [self observe:object keyPath:keyPath options:options context:context];
   }
@@ -637,7 +643,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
 {
   // create representative info
   _FBKVOInfo *info = [[_FBKVOInfo alloc] initWithController:self keyPath:keyPath];
-  
+
   // unobserve object property
   [self _unobserve:object info:info];
 }
@@ -647,7 +653,7 @@ typedef NS_ENUM(uint8_t, _FBKVOInfoState) {
   if (nil == object) {
     return;
   }
-  
+
   [self _unobserve:object];
 }
 

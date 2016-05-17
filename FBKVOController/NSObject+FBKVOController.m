@@ -9,7 +9,6 @@
 
 #import "NSObject+FBKVOController.h"
 
-#import <libkern/OSAtomic.h>
 #import <objc/message.h>
 
 #if !__has_feature(objc_arc)
