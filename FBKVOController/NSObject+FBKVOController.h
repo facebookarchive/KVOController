@@ -13,6 +13,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Category that adds built-in `KVOController` and `KVOControllerNonRetaining` on any instance of `NSObject`.
+
+ This makes it convenient to simply create and forget a `FBKVOController`, 
+ and when this object gets dealloc'd, so will the associated controller and the observation info.
+ */
 @interface NSObject (FBKVOController)
 
 /**

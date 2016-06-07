@@ -53,6 +53,10 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  */
 @interface FBKVOController : NSObject
 
+///--------------------------------------
+#pragma mark - Initialize
+///--------------------------------------
+
 /**
  @abstract Creates and returns an initialized KVO controller instance.
  @param observer The object notified on key-value change.
@@ -67,7 +71,7 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  @return The initialized KVO controller instance.
  @discussion Use retainObserved = NO when a strong reference between controller and observee would create a retain loop. When not retaining observees, special care must be taken to remove observation info prior to observee dealloc.
  */
-- (instancetype)initWithObserver:(nullable id)observer retainObserved:(BOOL)retainObserved;
+- (instancetype)initWithObserver:(nullable id)observer retainObserved:(BOOL)retainObserved NS_DESIGNATED_INITIALIZER;
 
 /**
  @abstract Convenience initializer.
@@ -76,6 +80,24 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  @discussion By default, KVO controller retains objects observed.
  */
 - (instancetype)initWithObserver:(nullable id)observer;
+
+/**
+ @abstract Initializes a new instance.
+
+ @warning This method is unavaialble. Please use `initWithObserver:` instead.
+ */
+- (instancetype)init NS_UNAVAILABLE;
+
+/**
+ @abstract Allocates memory and initializes a new instance into it.
+
+ @warning This method is unavaialble. Please use `controllerWithObserver:` instead.
+ */
++ (instancetype)new NS_UNAVAILABLE;
+
+///--------------------------------------
+#pragma mark - Observe
+///--------------------------------------
 
 /**
  The observer notified on key-value change. Specified on initialization.
@@ -142,6 +164,10 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  @discussion On key-value change, the observer's -observeValueForKeyPath:ofObject:change:context: method is called. Observing an already observed object key path or nil results in no operation.
  */
 - (void)observe:(nullable id)object keyPaths:(NSArray<NSString *> *)keyPaths options:(NSKeyValueObservingOptions)options context:(nullable void *)context;
+
+///--------------------------------------
+#pragma mark - Unobserve
+///--------------------------------------
 
 /**
  @abstract Unobserve object key path.
