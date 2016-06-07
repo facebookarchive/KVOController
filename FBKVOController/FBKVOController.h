@@ -53,6 +53,10 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  */
 @interface FBKVOController : NSObject
 
+///--------------------------------------
+#pragma mark - Initialize
+///--------------------------------------
+
 /**
  @abstract Creates and returns an initialized KVO controller instance.
  @param observer The object notified on key-value change.
@@ -90,6 +94,10 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  @warning This method is unavaialble. Please use `controllerWithObserver:` instead.
  */
 + (instancetype)new NS_UNAVAILABLE;
+
+///--------------------------------------
+#pragma mark - Observe
+///--------------------------------------
 
 /**
  The observer notified on key-value change. Specified on initialization.
@@ -156,6 +164,10 @@ typedef void (^FBKVONotificationBlock)(id _Nullable observer, id object, NSDicti
  @discussion On key-value change, the observer's -observeValueForKeyPath:ofObject:change:context: method is called. Observing an already observed object key path or nil results in no operation.
  */
 - (void)observe:(nullable id)object keyPaths:(NSArray<NSString *> *)keyPaths options:(NSKeyValueObservingOptions)options context:(nullable void *)context;
+
+///--------------------------------------
+#pragma mark - Unobserve
+///--------------------------------------
 
 /**
  @abstract Unobserve object key path.
