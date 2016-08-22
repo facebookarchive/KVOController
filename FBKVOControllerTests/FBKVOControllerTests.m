@@ -54,25 +54,31 @@ static NSKeyValueObservingOptions const optionsAll = optionsBasic | NSKeyValueOb
   __block NSUInteger blockCallCount = 0;
   __block id blockObserver = nil;
   __block id blockObject = nil;
+  __block NSString *blockKeyPath = nil;
   __block NSDictionary *blockChange = nil;
   
   // add mock observer
   [controller observe:circle keyPath:radius options:optionsBasic block:^(id observer, id object, NSDictionary *change) {
     blockObserver = observer;
     blockObject = object;
-    blockChange = change;
+    NSMutableDictionary *mChange = [change mutableCopy];
+    [mChange removeObjectForKey:FBKVONotificationKeyPathKey];
+    blockChange = [mChange copy];
+    blockKeyPath = change[FBKVONotificationKeyPathKey];
     blockCallCount++;
   }];
   
   XCTAssert(1 == blockCallCount, @"unexpected block call count:%lu expected:%d", (unsigned long)blockCallCount, 1);
   XCTAssert(blockObserver == observer, @"value:%@ expected:%@", blockObserver, observer);
   XCTAssert(blockObject == referenceObserver.lastObject, @"value:%@ expected:%@", blockObject, referenceObserver.lastObject);
+  XCTAssert([blockKeyPath isEqualToString:radius], @"value:%@ expected:%@", blockKeyPath, radius);
   XCTAssertEqualObjects(blockChange, referenceObserver.lastChange, @"value:%@ expected:%@", blockChange, referenceObserver.lastChange);
   
   circle.radius = 1.0;
   XCTAssert(2 == blockCallCount, @"unexpected block call count:%lu expected:%d", (unsigned long)blockCallCount, 2);
   XCTAssert(blockObserver == observer, @"value:%@ expected:%@", blockObserver, observer);
   XCTAssert(blockObject == referenceObserver.lastObject, @"value:%@ expected:%@", blockObject, referenceObserver.lastObject);
+  XCTAssert([blockKeyPath isEqualToString:radius], @"value:%@ expected:%@", blockKeyPath, radius);
   XCTAssertEqualObjects(blockChange, referenceObserver.lastChange, @"value:%@ expected:%@", blockChange, referenceObserver.lastChange);
   
   // cleanup
